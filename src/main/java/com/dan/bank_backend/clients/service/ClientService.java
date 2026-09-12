@@ -13,5 +13,5 @@ public interface ClientService {
     ClientDTO getClientByIdNum(String identification_number);
     ClientDTO createClient(CreateClientRequestDTO createClientDTO);
     ClientDTO updateClient(Long id, UpdateClientRequestDTO updateClientDTO);
-
+    void deleteClient(Long id);
 }

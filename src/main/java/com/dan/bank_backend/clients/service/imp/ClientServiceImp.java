@@ -86,4 +86,12 @@ public class ClientServiceImp implements ClientService {
         return clientMapper.toDTO(updatedClient);
     }
 
+    //Nota: Falta checkear que no tenga producto financiero
+    @Override
+    public void deleteClient(Long id) {
+        if(!clientRepo.existsById(id)){
+            throw new ClientNotFoundException(id);
+        }
+        clientRepo.deleteById(id);
+    }
 }
