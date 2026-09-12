@@ -74,6 +74,16 @@ public class ClientServiceImp implements ClientService {
 
     @Override
     public ClientDTO updateClient(Long id, UpdateClientRequestDTO updateClientDTO) {
-        return null;
+        Client client = clientRepo.findById(id)
+                .orElseThrow(() -> new ClientNotFoundException(id));
+        client.setIdentificationType(updateClientDTO.identificationType());
+        client.setIdentificationNumber(updateClientDTO.identificationNumber());
+        client.setFirstname(updateClientDTO.firstname());
+        client.setLastName(updateClientDTO.lastName());
+        client.setEmail(updateClientDTO.email());
+        client.setUpdatedAt(LocalDateTime.now());
+        Client updatedClient = clientRepo.save(client);
+        return clientMapper.toDTO(updatedClient);
     }
+
 }
