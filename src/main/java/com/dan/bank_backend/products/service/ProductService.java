@@ -12,4 +12,7 @@ public interface ProductService {
     List<ProductDTO> findProductByClientId(Long clientId);
     ProductDTO saveProduct(CreateProductRequestDTO request);
     void deleteProductBy(Long productId);
+    void activateProduct(Long productId);
+    void disableProduct(Long productId);
+    void cancelProduct(Long productId);
 }

@@ -79,6 +79,43 @@ public class ProductServiceImp implements ProductService {
         }
         productRepo.deleteById(productId);
     }
+
+    @Override
+    public void activateProduct(Long productId) {
+        Product product = productRepo.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException());
+        if(product.getProductState().equals(AccountState.ACTIVE)){
+            throw new RuntimeException("Product has already been activated");
+        }
+        product.setProductState(AccountState.ACTIVE);
+        product.setUpdatedAt(LocalDateTime.now());
+        productRepo.save(product);
+    }
+
+    @Override
+    public void disableProduct(Long productId) {
+        Product product = productRepo.findById(productId)
+                .orElseThrow(()-> new ProductNotFoundException());
+        if (product.getProductState().equals(AccountState.INACTIVE)){
+            throw new RuntimeException("Product has already been inactive");
+        }
+        product.setProductState(AccountState.INACTIVE);
+        product.setUpdatedAt(LocalDateTime.now());
+        productRepo.save(product);
+    }
+
+    @Override
+    public void cancelProduct(Long productId) {
+        Product product = productRepo.findById(productId)
+                .orElseThrow(()-> new ProductNotFoundException());
+        if (product.getProductState().equals(AccountState.CANCELLED)){
+            throw new RuntimeException("Product has already been cancelled");
+        }
+        product.setProductState(AccountState.CANCELLED);
+        product.setUpdatedAt(LocalDateTime.now());
+        productRepo.save(product);
+    }
+
     private String generateAccountNumber(AccountType type){
         Random random = new Random();
         int number = 10000000 + random.nextInt(90000000);
@@ -86,13 +123,10 @@ public class ProductServiceImp implements ProductService {
     }
     private void validateAccount(Product product){
         if(product.getBalance() == null){
-            throw new IllegalArgumentException("El saldo no puede ser nulo");
-        }
-        if(product.getAccountType() == AccountType.AHORROS && product.getBalance().compareTo(BigDecimal.ZERO) < 0){
-            throw new IllegalArgumentException("El saldo de una cuenta de ahorros no puede ser menor a 0");
+            throw new IllegalArgumentException("Balance cannot be null");
         }
         if(product.getBalance().compareTo(BigDecimal.ZERO) < 0){
-            throw new IllegalArgumentException("El saldo no puede ser menor a 0");
+            throw new IllegalArgumentException("Balance cannot be less than 0");
         }
 
     }
