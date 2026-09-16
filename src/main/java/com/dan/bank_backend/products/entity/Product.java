@@ -6,6 +6,8 @@ import com.dan.bank_backend.products.model.AccountType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -38,5 +40,7 @@ public class Product {
     @JoinColumn(name = "client_id",
             foreignKey = @ForeignKey(name = "fk_product_client")
             ,nullable = false)
+    //Si se elimina un cliente se eliminan los products asociados a el! :0
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Client client;
 }
