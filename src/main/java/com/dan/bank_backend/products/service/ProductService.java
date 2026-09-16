@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ProductService {
     List<ProductDTO> getAll();
-    Optional<ProductDTO> findProductById(Long productId);
+    ProductDTO findProductById(Long productId);
     List<ProductDTO> findProductByClientId(Long clientId);
     ProductDTO saveProduct(CreateProductRequestDTO request);
     void deleteProductBy(Long productId);
