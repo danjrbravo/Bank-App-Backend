@@ -35,6 +35,8 @@ public class Product {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
     @ManyToOne
-    @JoinColumn(name = "client_id",nullable = false)
+    @JoinColumn(name = "client_id",
+            foreignKey = @ForeignKey(name = "fk_product_client")
+            ,nullable = false)
     private Client client;
 }
