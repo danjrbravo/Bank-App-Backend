@@ -17,19 +17,19 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
     @Column(nullable = false)
     private BigDecimal amount;
     @ManyToOne
     @JoinColumn(name = "origin_product_id",
-                foreignKey = @ForeignKey(name = "fk_origin_id"),
-                nullable = false)
+                foreignKey = @ForeignKey(name = "fk_origin_id"))
     private Product originProduct;
     @ManyToOne
     @JoinColumn(name = "destiny_product_id",
-                foreignKey = @ForeignKey(name = "fk_destiny_id"),
-                nullable = false)
+                foreignKey = @ForeignKey(name = "fk_destiny_id"))
     private Product destinyProduct;
+    @Column(nullable = false)
     private LocalDateTime transactionDate;
 }
 
