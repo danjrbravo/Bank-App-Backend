@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 public record WithdrawTransactionRequestDTO(
         TransactionType transactionType,
         BigDecimal amount,
-        Long originProduct
+        Long originProductId
 ) {
 }

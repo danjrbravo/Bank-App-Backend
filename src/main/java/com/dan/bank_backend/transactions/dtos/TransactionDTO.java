@@ -9,8 +9,8 @@ public record TransactionDTO(
         Long id,
         TransactionType transactionType,
         BigDecimal amount,
-        Long originProduct,
-        Long destinyProduct,
+        Long originProductId,
+        Long destinyProductId,
         LocalDateTime transactionDate
 ) {
 }

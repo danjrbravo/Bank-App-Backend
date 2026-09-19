@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 public record ConsignTransactionRequestDTO(
         TransactionType transactionType,
         BigDecimal amount,
-        Long destinyProduct
+        Long destinyProductId
 ) {
 }

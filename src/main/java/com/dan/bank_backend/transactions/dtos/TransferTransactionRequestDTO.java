@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public record TransferTransactionRequestDTO(
         TransactionType transactionType,
         BigDecimal amount,
-        Long originProduct,
-        Long destinyProduct
+        Long originProductId,
+        Long destinyProductId
 ) {
 }

@@ -27,12 +27,14 @@ public class TransactionMapper {
     public Transaction toEntity(ConsignTransactionRequestDTO dto, Product destinyProduct){
         Transaction transaction = new Transaction();
         transaction.setTransactionType(dto.transactionType());
+        transaction.setAmount(dto.amount());
         transaction.setDestinyProduct(destinyProduct);
         return transaction;
     }
     public Transaction toEntity(WithdrawTransactionRequestDTO dto,Product originProduct){
         Transaction transaction = new Transaction();
         transaction.setTransactionType(dto.transactionType());
+        transaction.setAmount(dto.amount());
         transaction.setOriginProduct(originProduct);
         return transaction;
     }
@@ -41,6 +43,7 @@ public class TransactionMapper {
                                 Product destinyProduct){
         Transaction transaction = new Transaction();
         transaction.setTransactionType(dto.transactionType());
+        transaction.setAmount(dto.amount());
         transaction.setOriginProduct(originProduct);
         transaction.setDestinyProduct(destinyProduct);
         return transaction;

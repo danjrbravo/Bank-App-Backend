@@ -12,6 +12,7 @@ import com.dan.bank_backend.products.model.AccountState;
 import com.dan.bank_backend.products.model.AccountType;
 import com.dan.bank_backend.products.repository.ProductRepository;
 import com.dan.bank_backend.products.service.ProductService;
+import com.dan.bank_backend.transactions.exception.InsufficientFundsException;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -116,6 +117,45 @@ public class ProductServiceImp implements ProductService {
         productRepo.save(product);
     }
 
+    @Override
+    public Product getProductEntityById(Long productId) {
+
+        return null;
+    }
+
+    @Override
+    public void verifyProductIsActive(Product product){
+        if(!product.getProductState().equals(AccountState.ACTIVE)){
+            throw new RuntimeException("Product Account is not active");
+        }
+    }
+    @Override
+    public void verifyFundsForTransaction(Product product,BigDecimal amount){
+        if(product.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) >= 0 ){
+            throw new InsufficientFundsException();
+        }
+    }
+    @Override
+    public void verifyAmountIsNotZero(BigDecimal amount){
+        if(!(amount.compareTo(BigDecimal.ZERO) > 0)){
+            throw new RuntimeException("Amount must be greater than 0");
+        }
+    }
+
+    @Override
+    public void addToBalance(Product product, BigDecimal amount) {
+        product.setBalance(product.getBalance().add(amount));
+        product.setUpdatedAt(LocalDateTime.now());
+        productRepo.save(product);
+    }
+
+    @Override
+    public void substractFromBalance(Product product,BigDecimal amount) {
+        product.setBalance(product.getBalance().subtract(amount));
+        product.setUpdatedAt(LocalDateTime.now());
+        productRepo.save(product);
+    }
+
     private String generateAccountNumber(AccountType type){
         Random random = new Random();
         int number = 10000000 + random.nextInt(90000000);
@@ -130,4 +170,5 @@ public class ProductServiceImp implements ProductService {
         }
 
     }
+
 }
