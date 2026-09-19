@@ -7,6 +7,7 @@ import com.dan.bank_backend.transactions.dtos.TransactionDTO;
 import com.dan.bank_backend.transactions.dtos.TransferTransactionRequestDTO;
 import com.dan.bank_backend.transactions.dtos.WithdrawTransactionRequestDTO;
 import com.dan.bank_backend.transactions.entity.Transaction;
+import com.dan.bank_backend.transactions.exception.TransactionNotFoundException;
 import com.dan.bank_backend.transactions.mapper.TransactionMapper;
 import com.dan.bank_backend.transactions.repository.TransactionRepository;
 import com.dan.bank_backend.transactions.service.TransactionService;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @Service
@@ -23,6 +25,21 @@ public class TransactionServiceImp implements TransactionService {
     private final TransactionRepository transactionRepo;
     private final ProductService productService;
     private final TransactionMapper transactionMapper;
+
+    @Override
+    public List<TransactionDTO> getAllTransactions() {
+        return transactionRepo.findAll()
+                .stream()
+                .map(transactionMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public TransactionDTO getTransactionById(Long id) {
+        Transaction transaction = transactionRepo.findById(id)
+                .orElseThrow(() -> new TransactionNotFoundException());
+        return transactionMapper.toDTO(transaction);
+    }
 
     @Transactional
     @Override
