@@ -119,8 +119,7 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public Product getProductEntityById(Long productId) {
-
-        return null;
+        return productRepo.findById(productId).orElseThrow(() -> new ProductNotFoundException());
     }
 
     @Override
@@ -131,7 +130,7 @@ public class ProductServiceImp implements ProductService {
     }
     @Override
     public void verifyFundsForTransaction(Product product,BigDecimal amount){
-        if(product.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) >= 0 ){
+        if(product.getBalance().subtract(amount).compareTo(BigDecimal.ZERO) < 0 ){
             throw new InsufficientFundsException();
         }
     }

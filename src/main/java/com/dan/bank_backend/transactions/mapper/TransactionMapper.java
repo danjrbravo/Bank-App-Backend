@@ -18,8 +18,8 @@ public class TransactionMapper {
           transaction.getOriginProduct() != null
                 ? transaction.getOriginProduct().getId()
                   : null,
-          transaction.getOriginProduct() != null
-                ? transaction.getOriginProduct().getId()
+          transaction.getDestinyProduct() != null
+                ? transaction.getDestinyProduct().getId()
                   :null,
           transaction.getTransactionDate()
         );
