@@ -57,6 +57,11 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
+    public boolean existsByClientId(Long clientId) {
+        return productRepo.existsByClientId(clientId);
+    }
+
+    @Override
     public ProductDTO saveProduct(CreateProductRequestDTO request) {
         Client client = clientRepo.findById(request.clientId())
                 .orElseThrow(() -> new ClientNotFoundException(request.clientId()));

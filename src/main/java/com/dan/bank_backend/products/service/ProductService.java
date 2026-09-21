@@ -6,12 +6,12 @@ import com.dan.bank_backend.products.entity.Product;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
     List<ProductDTO> getAll();
     ProductDTO findProductById(Long productId);
     List<ProductDTO> findProductByClientId(Long clientId);
+    boolean existsByClientId(Long clientId);
     ProductDTO saveProduct(CreateProductRequestDTO request);
     void deleteProductBy(Long productId);
     void activateProduct(Long productId);

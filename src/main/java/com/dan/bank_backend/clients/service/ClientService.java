@@ -5,8 +5,6 @@ import com.dan.bank_backend.clients.dtos.CreateClientRequestDTO;
 import com.dan.bank_backend.clients.dtos.UpdateClientRequestDTO;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface ClientService {
     Page<ClientDTO> getClients(int page, int size);
     ClientDTO getClientById(Long id);

@@ -1,12 +1,14 @@
 package com.dan.bank_backend.clients.controller.advice;
 
 import com.dan.bank_backend.clients.exception.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
+@Order(1)
 public class ClientControllerAdvice {
 
     @ExceptionHandler(ClientNotFoundException.class)
@@ -23,6 +25,10 @@ public class ClientControllerAdvice {
     }
     @ExceptionHandler(ClientIdentificationNumberAlreadyExists.class)
     public ResponseEntity<String> handleClientIdentificationNumberAlreadyExists(ClientIdentificationNumberAlreadyExists ex){
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+    @ExceptionHandler(ClientHasProductsException.class)
+    public ResponseEntity<String> handleClientHasProducts(ClientHasProductsException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
     @ExceptionHandler(UnderAgeRestrictionException.class)

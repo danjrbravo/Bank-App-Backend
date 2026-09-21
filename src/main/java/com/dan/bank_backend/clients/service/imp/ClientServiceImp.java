@@ -4,13 +4,11 @@ import com.dan.bank_backend.clients.dtos.ClientDTO;
 import com.dan.bank_backend.clients.dtos.CreateClientRequestDTO;
 import com.dan.bank_backend.clients.dtos.UpdateClientRequestDTO;
 import com.dan.bank_backend.clients.entity.Client;
-import com.dan.bank_backend.clients.exception.InvalidBirthdayException;
-import com.dan.bank_backend.clients.exception.ClientNotFoundByIdentificationNumberException;
-import com.dan.bank_backend.clients.exception.ClientNotFoundException;
-import com.dan.bank_backend.clients.exception.UnderAgeRestrictionException;
+import com.dan.bank_backend.clients.exception.*;
 import com.dan.bank_backend.clients.mapper.ClientMapper;
 import com.dan.bank_backend.clients.repository.ClientRepository;
 import com.dan.bank_backend.clients.service.ClientService;
+import com.dan.bank_backend.products.service.ProductService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +21,11 @@ import java.time.Period;
 @Service
 public class ClientServiceImp implements ClientService {
     private final ClientRepository clientRepo;
+    private final ProductService productService;
     private final ClientMapper clientMapper;
-    public ClientServiceImp(ClientRepository clientRepo,ClientMapper clientMapper){
+    public ClientServiceImp(ClientRepository clientRepo,ClientMapper clientMapper,ProductService productService){
         this.clientRepo = clientRepo;
+        this.productService = productService;
         this.clientMapper = clientMapper;
     }
 
@@ -91,6 +91,9 @@ public class ClientServiceImp implements ClientService {
     public void deleteClient(Long id) {
         if(!clientRepo.existsById(id)){
             throw new ClientNotFoundException(id);
+        }
+        if(productService.existsByClientId(id)){
+            throw new ClientHasProductsException(id);
         }
         clientRepo.deleteById(id);
     }

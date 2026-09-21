@@ -2,7 +2,7 @@ package com.dan.bank_backend.products.controller;
 
 import com.dan.bank_backend.products.dtos.CreateProductRequestDTO;
 import com.dan.bank_backend.products.dtos.ProductDTO;
-import com.dan.bank_backend.products.service.imp.ProductServiceImp;
+import com.dan.bank_backend.products.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
-    private final ProductServiceImp productService;
+    private final ProductService productService;
 
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAll(){
@@ -24,6 +24,10 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getById(@PathVariable Long id){
         return ResponseEntity.ok(productService.findProductById(id));
+    }
+    @GetMapping("/client/{id}")
+    public ResponseEntity<List<ProductDTO>> getClientProductsById(@PathVariable Long id){
+        return ResponseEntity.ok(productService.findProductByClientId(id));
     }
     @PostMapping
     public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody CreateProductRequestDTO productDTO){
