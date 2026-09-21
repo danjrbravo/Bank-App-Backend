@@ -1,4 +1,4 @@
-package com.dan.bank_backend.GlobalAdvice;
+package com.dan.bank_backend.globalAdvice;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
