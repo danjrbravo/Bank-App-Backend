@@ -6,6 +6,7 @@ import com.dan.bank_backend.clients.repository.ClientRepository;
 import com.dan.bank_backend.products.dtos.CreateProductRequestDTO;
 import com.dan.bank_backend.products.dtos.ProductDTO;
 import com.dan.bank_backend.products.entity.Product;
+import com.dan.bank_backend.products.exceptions.ProductAccountNotActiveException;
 import com.dan.bank_backend.products.exceptions.ProductNotFoundException;
 import com.dan.bank_backend.products.mapper.ProductMapper;
 import com.dan.bank_backend.products.model.AccountState;
@@ -125,7 +126,7 @@ public class ProductServiceImp implements ProductService {
     @Override
     public void verifyProductIsActive(Product product){
         if(!product.getProductState().equals(AccountState.ACTIVE)){
-            throw new RuntimeException("Product Account is not active");
+            throw new ProductAccountNotActiveException();
         }
     }
     @Override
